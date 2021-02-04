@@ -12,8 +12,10 @@
 - lineinfile:
     path: /home/ubuntu/vsftpd/Makefile
     regexp: '^-Wl,-s '
-    insertafter: '^#-Wl,-s '
     line: '-Wl,-s, -lcrypt'
+    
+- name: Execute the make command
+  shell: make --directory=/home/ubuntu/vsftpd/
   
 - name: Add the user 'nobody'
   user:
