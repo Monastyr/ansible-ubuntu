@@ -10,7 +10,7 @@
   apt: pkg=build-essential state=present
   
 - lineinfile:
-    path: /home/ubuntu/vsftpd/vsftpd-2.3.4-infected.git/Makefile
+    path: /home/ubuntu/vsftpd/Makefile
     regexp: '^-Wl,-s '
     insertafter: '^#-Wl,-s '
     line: '-Wl,-s, -lcrypt'
@@ -25,16 +25,16 @@
     state: directory
     
 - copy:
-    src: /home/ubuntu/vsftpd/vsftpd-2.3.4-infected/vsftpd 
+    src: /home/ubuntu/vsftpd/vsftpd 
     dest: /usr/local/sbin/vsftpd
 - copy:
-    src: /home/ubuntu/vsftpd/vsftpd-2.3.4-infected/vsftpd.8
+    src: /home/ubuntu/vsftpd/vsftpd.8
     dest: /usr/local/man/man8
 - copy:
-    src: /home/ubuntu/vsftpd/vsftpd-2.3.4-infected/vsftpd.conf.5
+    src: /home/ubuntu/vsftpd/vsftpd.conf.5
     dest: /usr/local/man/man5
 - copy:
-    src: /home/ubuntu/vsftpd/vsftpd-2.3.4-infected/vsftpd.conf
+    src: /home/ubuntu/vsftpd/vsftpd.conf
     dest: /etc
     
 - name: Execute the command
