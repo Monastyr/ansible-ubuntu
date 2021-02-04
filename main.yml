@@ -1,6 +1,6 @@
 ---
 - name: Install DVWA
-  hosts: dvwa
+  hosts: ubuntu
   remote_user: ansible
   become: true
   become_method: sudo
