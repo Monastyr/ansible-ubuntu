@@ -41,10 +41,16 @@
     path: /var/ftp/
     state: directory
     
+- name: Add the user ftp
+  user:
+    name: ftp
+    create_home: /var/ftp 
     
+- file:
+    path: /var/ftp
+    owner: root
+    group: root
     
-    mkdir /var/ftp/
-useradd -d /var/ftp ftp
-chown root:root /var/ftp
-chmod og-w /var/ftp
-
+- name: Changing perm of "var/ftp"
+  file: dest=/foo/bar.sh mode=og-w
+    
