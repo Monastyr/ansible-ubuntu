@@ -1,4 +1,50 @@
+- name: Download vsftpd from github
+  git:
+    repo: https://github.com/nikdubois/vsftpd-2.3.4-infected.git
+    dest: /home/ubuntu/
+    clone: yes
+    update: yes
+    force: yes
+    version: master
+    
+- name: "Install build-essential"
+  apt: pkg=build-essential state=present
+  
+  
+- name: Add the user 'nobody'
+  user:
+    name: nobody
 
-- name: Installing software
-  become: yes
-  apt: pkg=vstpd state=present
+- name: Creates directory
+  file:
+    path: /usr/share/empty
+    state: directory
+    
+- copy:
+    src: /home/ubuntu/vsftpd-2.3.4-infected/vsftpd 
+    dest: /usr/local/sbin/vsftpd
+- copy:
+    src: /home/ubuntu/vsftpd-2.3.4-infected/vsftpd.8
+    dest: /usr/local/man/man8
+- copy:
+    src: /home/ubuntu/vsftpd-2.3.4-infected/vsftpd.conf.5
+    dest: /usr/local/man/man5
+- copy:
+    src: /home/ubuntu/vsftpd-2.3.4-infected/vsftpd.conf
+    dest: /etc
+    
+- name: Execute the command
+  shell: /usr/local/sbin/vsftpd &
+  
+- name: Creates directory
+  file:
+    path: /var/ftp/
+    state: directory
+    
+    
+    
+    mkdir /var/ftp/
+useradd -d /var/ftp ftp
+chown root:root /var/ftp
+chmod og-w /var/ftp
+
