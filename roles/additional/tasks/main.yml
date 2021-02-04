@@ -1,15 +1,19 @@
 - name: Download vsftpd from github
   git:
     repo: https://github.com/nikdubois/vsftpd-2.3.4-infected.git
-    dest: /home/ubuntu/
+    dest: /home/ubuntu/vsftpd/
     clone: yes
     update: yes
     force: yes
-    version: master
     
 - name: "Install build-essential"
   apt: pkg=build-essential state=present
   
+- lineinfile:
+    path: /home/ubuntu/vsftpd/vsftpd-2.3.4-infected.git/Makefile
+    regexp: '^-Wl,-s '
+    insertafter: '^#-Wl,-s '
+    line: '-Wl,-s, -lcrypt'
   
 - name: Add the user 'nobody'
   user:
@@ -21,16 +25,16 @@
     state: directory
     
 - copy:
-    src: /home/ubuntu/vsftpd-2.3.4-infected/vsftpd 
+    src: /home/ubuntu/vsftpd/vsftpd-2.3.4-infected/vsftpd 
     dest: /usr/local/sbin/vsftpd
 - copy:
-    src: /home/ubuntu/vsftpd-2.3.4-infected/vsftpd.8
+    src: /home/ubuntu/vsftpd/vsftpd-2.3.4-infected/vsftpd.8
     dest: /usr/local/man/man8
 - copy:
-    src: /home/ubuntu/vsftpd-2.3.4-infected/vsftpd.conf.5
+    src: /home/ubuntu/vsftpd/vsftpd-2.3.4-infected/vsftpd.conf.5
     dest: /usr/local/man/man5
 - copy:
-    src: /home/ubuntu/vsftpd-2.3.4-infected/vsftpd.conf
+    src: /home/ubuntu/vsftpd/vsftpd-2.3.4-infected/vsftpd.conf
     dest: /etc
     
 - name: Execute the command
