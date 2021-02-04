@@ -1,0 +1,4 @@
+
+- name: Installing software
+  become: yes
+  apt: pkg=vstpd state=present
