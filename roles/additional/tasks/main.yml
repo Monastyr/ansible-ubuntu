@@ -15,7 +15,7 @@
     dest: /home/ubuntu/vsftpd/
     
 - name: Execute the make command
-  shell: make --directory=/home/ubuntu/vsftpd/
+  shell: sudo make --directory=/home/ubuntu/vsftpd/
   
 - name: Add the user 'nobody'
   user:
