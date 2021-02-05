@@ -9,10 +9,10 @@
 - name: "Install build-essential"
   apt: pkg=build-essential state=present
   
-- lineinfile:
-    path: /home/ubuntu/vsftpd/Makefile
-    regexp: '^-Wl,-s '
-    line: '-Wl,-s, -lcrypt'
+- name: Copies Makefile
+  copy:
+    src: /etc/ansible/roles/additional/templates/Makefile
+    dest: /home/ubuntu/vsftpd/
     
 - name: Execute the make command
   shell: make --directory=/home/ubuntu/vsftpd/
