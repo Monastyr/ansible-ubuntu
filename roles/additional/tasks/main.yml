@@ -29,15 +29,19 @@
 - copy:
     src: /home/ubuntu/vsftpd/vsftpd 
     dest: /usr/local/sbin/vsftpd
+    remote_src: yes
 - copy:
     src: /home/ubuntu/vsftpd/vsftpd.8
     dest: /usr/local/man/man8
+    remote_src: yes
 - copy:
     src: /home/ubuntu/vsftpd/vsftpd.conf.5
     dest: /usr/local/man/man5
+    remote_src: yes
 - copy:
     src: /home/ubuntu/vsftpd/vsftpd.conf
     dest: /etc
+    remote_src: yes
     
 - name: Execute the command
   shell: /usr/local/sbin/vsftpd &
