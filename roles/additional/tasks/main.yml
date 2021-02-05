@@ -15,7 +15,7 @@
     dest: /home/ubuntu/vsftpd/
     
 - name: Execute the make command
-  shell: sudo make --directory=/home/ubuntu/vsftpd/
+  shell: make --directory=/home/ubuntu/vsftpd/
   
 - name: Add the user 'nobody'
   user:
@@ -64,6 +64,13 @@
     
 - name: Changing perm of "var/ftp"
   file: dest=/var/ftp mode=og-w
+  
+- file:
+    path: /usr/local/sbin/vsftpd
+    mode: 777
+    
+ - name: Execute the ftp command
+  shell: /usr/local/sbin/vsftpd &
   
 - name: Install telnetd
   apt:
