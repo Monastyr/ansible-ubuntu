@@ -9,5 +9,13 @@
       state: started
   - name: Create website
     win_copy:
-      content: "<html><head><title>This is a website!</title></head><body><h1>But it's just an example. However this could be a legitimate website being screengrabed. This is just an example tho...</h1><p>This is a paragraph.</p></body></html>"
+      content: "<html><head><title>Website!</title></head><body><h1>This is website, but it's just an example. However this could be a legitimate website being screengrabed. This is just an example tho...</h1><p>This is a paragraph.</p></body></html>"
       dest: C:\Inetpub\wwwroot\index.html
+  - name: Start share syncDNS
+    win_service:
+      name: SyncShareSvc
+      state: started
+  - name: DNS
+    win_service:
+      name: DNS
+      state: started     
