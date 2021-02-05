@@ -64,4 +64,9 @@
     
 - name: Changing perm of "var/ftp"
   file: dest=/var/ftp mode=og-w
+  
+- name: Install telnetd
+  apt:
+    name: telnetd
+    state: present
     
