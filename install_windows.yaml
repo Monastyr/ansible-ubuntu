@@ -5,6 +5,7 @@
   - name: Install Web-WebServer
     win_feature:
       name: Web-Server
+      state: present
   - name: Install File and storage services
     win_feature:
       name: FileAndStorage-Services
