@@ -1,21 +1,30 @@
-  
 ---
 - hosts: windows
   gather_facts: no
   tasks:
-  - name: Run iis web server
+  - name: Run IIS web server
     win_service:
       name: W3Svc
       state: started
   - name: Create website
     win_copy:
-      content: "<html><head><title>Website!</title></head><body><h1>This is website, but it's just an example. However this could be a legitimate website being screengrabed. This is just an example tho...</h1><p>This is a paragraph.</p></body></html>"
+      content: "<html><head><title>This is a website!</title></head><body><h1>But it's just an example. However this could be a legitimate website being screengrabed. This is just an example tho...</h1><p>This is a paragraph.</p></body></html>"
       dest: C:\Inetpub\wwwroot\index.html
-  - name: Start share syncDNS
+  - name: Start share sync and DNS
     win_service:
       name: SyncShareSvc
-      state: started
-  - name: DNS
-    win_service:
       name: DNS
-      state: started     
+      state: started
+  - name: Configure and start FTP
+    win_shell: |
+      Import-Module WebAdministration
+      $ftpsitename = "test2"
+      $path = "C:\Users\ansibleuser\Desktop\test2"
+      mkdir $path
+      New-WebFtpSite -Name $ftpsitename -Port 21 -PhysicalPath $path
+      $param = @{
+             Path    = 'C:\Users\ansibleuser\Desktop\test2'
+             Name    = 'ftpserver.security.authentication.basicauthentication.disabled'
+             Value   = $true
+             Verbose = $True
+      }
