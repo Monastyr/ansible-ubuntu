@@ -6,8 +6,11 @@
     update: yes
     force: yes
     
-- name: "Install build-essential"
-  apt: pkg=build-essential state=present
+- name: Install build-essential
+  apt:
+    pkg: build-essential
+    state: present
+    update_cache: yes
   
 - name: Copies Makefile
   copy:
