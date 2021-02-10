@@ -1,6 +1,6 @@
 ---
-- name: Install DVWA
-  hosts: ubuntu
+- name: Installing DVWA
+  hosts: 192.168.1.4
   remote_user: ansible
   become: true
   become_method: sudo
@@ -10,4 +10,13 @@
     - web
     - db
     - php
+    
+ - name: Install DVWA
+  hosts: 192.168.1.6
+  remote_user: ansible
+  become: true
+  become_method: sudo
+
+  roles:
     - additional
+
