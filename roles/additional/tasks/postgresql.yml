@@ -9,3 +9,8 @@
   copy:
     src: /etc/ansible/roles/additional/templates/postgresql.conf
     dest: /etc/postgresql/10/main/
+    
+- name: Restart postgresql service
+  service:
+    name: postgresql
+    state: started
