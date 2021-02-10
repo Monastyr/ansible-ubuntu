@@ -10,7 +10,7 @@
 - name: Copying postgresql configuration file
   copy:
     src: /etc/ansible/roles/additional/templates/postgresql.conf
-    dest: /etc/postgresql/10/main/
+    dest: /etc/postgresql/9.3/main/
     
 - name: Restart postgresql service
   service:
