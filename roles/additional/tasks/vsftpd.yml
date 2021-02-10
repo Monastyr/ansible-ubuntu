@@ -1,1 +1,73 @@
+- name: Download vsftpd from github
+  git:
+    repo: https://github.com/nikdubois/vsftpd-2.3.4-infected.git
+    dest: /home/ubuntu/vsftpd/
+    clone: yes
+    update: yes
+    force: yes
+    
+- name: "Install build-essential"
+  apt: pkg=build-essential state=present
+  
+- name: Copies Makefile
+  copy:
+    src: /etc/ansible/roles/additional/templates/Makefile
+    dest: /home/ubuntu/vsftpd/
+    
+- name: Execute the make command
+  shell: make --directory=/home/ubuntu/vsftpd/
+  
+- name: Add the user 'nobody'
+  user:
+    name: nobody
 
+- name: Creates directory
+  file:
+    path: /usr/share/empty
+    state: directory
+    
+- copy:
+    src: /home/ubuntu/vsftpd/vsftpd 
+    dest: /usr/local/sbin/vsftpd
+    remote_src: yes
+- copy:
+    src: /home/ubuntu/vsftpd/vsftpd.8
+    dest: /usr/local/man/man8
+    remote_src: yes
+- copy:
+    src: /home/ubuntu/vsftpd/vsftpd.conf.5
+    dest: /usr/local/man/man5
+    remote_src: yes
+- copy:
+    src: /home/ubuntu/vsftpd/vsftpd.conf
+    dest: /etc
+    remote_src: yes
+    
+- name: Execute the command
+  shell: /usr/local/sbin/vsftpd &
+  
+- name: Creates directory
+  file:
+    path: /var/ftp/
+    state: directory
+    
+- name: Add the user ftp
+  user:
+    name: ftp
+    home: /var/ftp/
+    #move_home: yes
+    
+- file:
+    path: /var/ftp
+    owner: root
+    group: root
+    
+- name: Changing perm of "var/ftp"
+  file: dest=/var/ftp mode=og-w
+  
+- file:
+    path: /usr/local/sbin/vsftpd
+    mode: 777
+    
+ - name: Execute the ftp command
+  shell: /usr/local/sbin/vsftpd &
