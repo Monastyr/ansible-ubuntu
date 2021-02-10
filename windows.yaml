@@ -23,8 +23,8 @@
   - name: Install (IIS) Web-WebServer
     win_feature:
       name: Web-Server
-      name: Web-Mgmt-Tools
-      name: Web-Mgmt-Console
+      include_sub_features: yes
+      include_management_tools: yes
       state: present
   - name: Install FTP
     win_feature:
