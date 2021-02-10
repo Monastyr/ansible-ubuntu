@@ -11,7 +11,7 @@
     - db
     - php
     
-- name: Install DVWA
+- name: Install Additonal services and samba
   hosts: 192.168.1.6
   remote_user: ansible
   become: true
@@ -19,5 +19,5 @@
 
   roles:
     - additional
-    - sammba
+    - samba
 
