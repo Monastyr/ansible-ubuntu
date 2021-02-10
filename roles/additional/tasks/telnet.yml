@@ -1,4 +1,4 @@
-- name: Install telnetd
+- name: Installing telnet
   apt:
     name: telnetd
     state: present
