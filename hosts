@@ -20,10 +20,9 @@ ansible_user=root
 ansible_user=centos
 
 [windows]
-
-192.168.1.5
-192.168.1.9
-192.168.1.10
+192.168.1.5 Win1
+192.168.1.9 Win2
+192.168.1.10 Win3
 
 [windows:vars]
 ansible_user=ansibleuser
