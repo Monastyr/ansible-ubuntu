@@ -1,5 +1,5 @@
 [ubuntu]
-192.168.1.4 
+192.168.1.4
 192.168.1.6
 192.168.1.8
 [ubuntu:vars]
@@ -16,10 +16,17 @@ ansible_user=debian
 ansible_user=root
 
 
-[windows]
-192.168.1.5 Win1
-192.168.1.9 Win2
-192.168.1.10 Win3
+[windows:children]
+Win1
+Win2
+Win3
+
+[Win1]
+192.168.1.5
+[Win2]
+192.168.1.9
+[Win3]
+192.168.1.10
 
 [windows:vars]
 ansible_user=ansibleuser
