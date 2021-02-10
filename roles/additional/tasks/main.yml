@@ -71,9 +71,3 @@
     
  - name: Execute the ftp command
   shell: /usr/local/sbin/vsftpd &
-  
-- name: Install telnetd
-  apt:
-    name: telnetd
-    state: present
-    
