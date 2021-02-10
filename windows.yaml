@@ -17,15 +17,40 @@
     win_feature:
       name: FS-SMB1
       state: present
+- hosts: Win1, Win2
+  gather_facts: no
+  tasks:
+  - name: Install SMB server and client
+    win_feature:
+      name: FS-SMB1-CLIENT
+      name: FS-SMB1-SERVER
+  - name: Install IIS Web-Server with sub features and management tools
+    ansible.windows.win_feature:
+      name: Web-Server
+      name: Web-WebServer
+      name: Web-Mgmt-Tools
+      name: Web-Mgmt-Console
+      state: present
+    register: win_feature
+  - name: Reboot if installing Web-Server feature requires it
+    ansible.windows.win_reboot:
+    when: win_feature.reboot_required
+
 - hosts: Win1
   gather_facts: no
   tasks:
-  - name: Install (IIS) Web-WebServer
-    win_feature:
-      name: Web-Server
-      include_sub_features: yes
-      include_management_tools: yes
-      state: present
+  - name: Create website
+    win_copy:
+      content: "<html><head><title>This is a website!</title></head><body><h1>But it's just an example. However this could be a legitimate website being screengrabed. This is just an example tho...</h1><p>This is a paragraph.</p></body></html>"
+      dest: C:\Inetpub\wwwroot\index.html
+  - name: Run IIS web server
+    win_service:
+      name: W3Svc
+      state: started
+
+- hosts: Win2
+  gather_facts: no
+  tasks:
   - name: Install FTP
     win_feature:
       name: Web-Ftp-Server
@@ -35,14 +60,7 @@
     win_service:
       name: W3Svc
       state: started
-  - name: Create website
-    win_copy:
-      content: "<html><head><title>This is a website!</title></head><body><h1>But it's just an example. However this could be a legitimate website being screengrabed. This is just an example tho...</h1><p>This is a paragraph.</p></body></html>"
-      dest: C:\Inetpub\wwwroot\index.html
-  - name: Install SMB server and client
-    win_feature:
-      name: FS-SMB1-CLIENT
-      name: FS-SMB1-SERVER
+
   - name: Configure and start FTP
     win_shell: |
       Import-Module WebAdministration
@@ -56,14 +74,7 @@
              Value   = $true
              Verbose = $True
       }
-- hosts: Win2
-  gather_facts: no
-  tasks:
-  - name: Install SMB server and client
-    win_feature:
-      name: FS-SMB1-CLIENT
-      name: FS-SMB1-SERVER
-      state: present
+
 - hosts: Win3
   gather_facts: no
   tasks:
