@@ -1,6 +1,7 @@
 [ubuntu]
 192.168.1.4 
 192.168.1.6
+192.168.1.8
 [ubuntu:vars]
 ansible_user=ubuntu
 
@@ -14,10 +15,6 @@ ansible_user=debian
 [kali:vars]
 ansible_user=root
 
-[centOS]
-192.168.1.8
-[centOS:vars]
-ansible_user=centos
 
 [windows]
 192.168.1.5 Win1
@@ -34,4 +31,3 @@ ansible_winrm_server_cert_validation=ignore
 ubuntu
 debian
 kali
-centOS
