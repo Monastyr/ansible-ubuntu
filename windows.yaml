@@ -41,8 +41,8 @@
       dest: C:\Inetpub\wwwroot\index.html
   - name: Install SMB server and client
     win_feature: 
-	  name: FS-SMB1-CLIENT
-	  name: FS-SMB1-SERVER
+      name: FS-SMB1-CLIENT
+      name: FS-SMB1-SERVER
   - name: Configure and start FTP
     win_shell: |
       Import-Module WebAdministration
@@ -61,8 +61,8 @@
   tasks:
   - name: Install SMB server and client
     win_feature: 
-	  name: FS-SMB1-CLIENT
-	  name: FS-SMB1-SERVER  
+      name: FS-SMB1-CLIENT
+      name: FS-SMB1-SERVER  
 - hosts: Win3
   gather_facts: no
   tasks:
