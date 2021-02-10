@@ -11,7 +11,7 @@
     - db
     - php
     
- - name: Install DVWA
+- name: Install DVWA
   hosts: 192.168.1.6
   remote_user: ansible
   become: true
