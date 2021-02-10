@@ -36,22 +36,6 @@
 #     msg: "{{ samba_version }}"
 #   tags: samba
 
-- name: Install SELinux package
-  package:
-    name: "{{ samba_selinux_packages }}"
-    state: present
-  when: ansible_selinux is defined and ansible_selinux.status == 'enabled'
-  tags: samba
-
-- name: Make sure SELinux boolean settings are correct
-  seboolean:
-    name: "{{ item }}"
-    state: true
-    persistent: true
-  with_items: "{{ samba_selinux_booleans }}"
-  when: ansible_selinux is defined and ansible_selinux.status == 'enabled'
-  tags: samba
-
 - name: Create Samba shares root directory
   file:
     state: directory
