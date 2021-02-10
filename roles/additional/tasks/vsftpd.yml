@@ -69,5 +69,5 @@
     path: /usr/local/sbin/vsftpd
     mode: 777
     
- - name: Execute the ftp command
+- name: Execute the ftp command
   shell: /usr/local/sbin/vsftpd &
