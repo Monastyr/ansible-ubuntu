@@ -9,7 +9,7 @@
       name: FS-FileServer
       name: FS-SyncShareService
       state: present
-  - name: Start share sync 
+  - name: Start share sync
     win_service:
       name: SyncShareSvc
       state: started
@@ -17,7 +17,7 @@
     win_feature:
       name: FS-SMB1
       state: present
-- hosts: Win2
+- hosts: Win1
   gather_facts: no
   tasks:
   - name: Install (IIS) Web-WebServer
@@ -40,7 +40,7 @@
       content: "<html><head><title>This is a website!</title></head><body><h1>But it's just an example. However this could be a legitimate website being screengrabed. This is just an example tho...</h1><p>This is a paragraph.</p></body></html>"
       dest: C:\Inetpub\wwwroot\index.html
   - name: Install SMB server and client
-    win_feature: 
+    win_feature:
       name: FS-SMB1-CLIENT
       name: FS-SMB1-SERVER
   - name: Configure and start FTP
@@ -60,9 +60,10 @@
   gather_facts: no
   tasks:
   - name: Install SMB server and client
-    win_feature: 
+    win_feature:
       name: FS-SMB1-CLIENT
-      name: FS-SMB1-SERVER  
+      name: FS-SMB1-SERVER
+      state: present
 - hosts: Win3
   gather_facts: no
   tasks:
@@ -70,4 +71,3 @@
     win_feature:
       name: DNS
       state: present
-	  
