@@ -19,13 +19,10 @@ ansible_user=root
 [windows:children]
 Win1
 Win2
-Win3
 
 [Win1]
 192.168.1.5
 [Win2]
-192.168.1.9
-[Win3]
 192.168.1.10
 
 [windows:vars]
