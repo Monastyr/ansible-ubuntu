@@ -22,7 +22,7 @@
     when: win_feature.reboot_required
   - name: Create website
     win_copy:
-      content: "<html><head><title>This is a website!</title></head><body><h1>Hello, world! This is a webpage example, just here so it can be screengrabbed! <img src='https://upload.wikimedia.org/wikipedia/commons/f/ff/Cliche_Hacker_and_Binary_Code_%2826946304530%29.jpg'></h1><p>This is a paragraph.</p></body></html>"
+      content: "<html><head><title>This is a website!</title></head><body><h1>Webpage example. Screengrab me! <img src='https://upload.wikimedia.org/wikipedia/commons/f/ff/Cliche_Hacker_and_Binary_Code_%2826946304530%29.jpg'></h1><p>This is a paragraph.</p></body></html>"
       dest: C:\Inetpub\wwwroot\index.html
   - name: Run IIS web server
     win_service:
@@ -87,4 +87,27 @@
   - name: Run FTP
     win_service:
       name: ftpsvc
+      state: started
+  - name: Download Apache 2.4.46
+    win_get_url:
+      url: https://www.apachelounge.com/download/VS16/binaries/httpd-2.4.46-win64-VS16.zip
+      dest: C:\Users\ansibleuser\Desktop\Apache.zip
+  - name: Unzipping Apache
+    community.windows.win_unzip:
+      src: C:\Users\ansibleuser\Desktop\Apache.zip
+      dest: C:\
+      delete_archive: yes
+  - name: Install Apache
+    script: InstallApacheOnWindows.bat
+  - name: Deleting Apache default index.html
+    ansible.windows.win_file:
+      path: C:\Apache24\htdocs\index.html
+      state: absent
+  - name: Create new website
+    win_copy:
+      content: "<html><head><title>This is also a website!</title></head><body><h1> This is a webpage as well. But we are using Apache instead of IIS here <img src='https://upload.wikimedia.org/wikipedia/commons/d/d6/Apache_HTTPD.png'></h1><p>This is a paragraph.</p></body></html>"
+      dest: C:\Apache24\htdocs\index.html
+  - name: Run Apache service
+    win_service:
+      name: Apache2.4
       state: started
