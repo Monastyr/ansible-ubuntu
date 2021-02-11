@@ -22,7 +22,7 @@
     when: win_feature.reboot_required
   - name: Create website
     win_copy:
-      content: "<html><head><title>This is a website!</title></head><body><h1>Webpage example. Screengrab me! <img src='https://upload.wikimedia.org/wikipedia/commons/f/ff/Cliche_Hacker_and_Binary_Code_%2826946304530%29.jpg'></h1><p>This is a paragraph.</p></body></html>"
+      content: "<html><head><title>This is a website!</title></head><body><h1><script> var pos=document.URL.indexOf("context=")+8; document.write(document.URL.substring(pos,document.URL.length));</script>Webpage example. Screengrab me! <img src='https://upload.wikimedia.org/wikipedia/commons/f/ff/Cliche_Hacker_and_Binary_Code_%2826946304530%29.jpg'></h1><p>This is a paragraph.</p></body></html>"
       dest: C:\Inetpub\wwwroot\index.html
   - name: Run IIS web server
     win_service:
@@ -70,12 +70,12 @@
   - name: Configure and start FTP
     win_shell: |
       Import-Module WebAdministration
-      $ftpsitename = "test2"
-      $path = "C:\Users\ansibleuser\Desktop\test2"
+      $ftpsitename = "FTPfolder"
+      $path = "C:\Users\ansibleuser\Desktop\FTPfolder"
       mkdir $path
       New-WebFtpSite -Name $ftpsitename -Port 21 -PhysicalPath $path
       $param = @{
-             Path    = 'C:\Users\ansibleuser\Desktop\test2'
+             Path    = 'C:\Users\ansibleuser\Desktop\FTPfolder'
              Name    = 'ftpserver.security.authentication.basicauthentication.disabled'
              Value   = $true
              Verbose = $True
@@ -105,7 +105,7 @@
       state: absent
   - name: Create new website
     win_copy:
-      content: "<html><head><title>This is also a website!</title></head><body><h1> This is a webpage as well. But we are using Apache instead of IIS here <img src='https://upload.wikimedia.org/wikipedia/commons/d/d6/Apache_HTTPD.png'></h1><p>This is a paragraph.</p></body></html>"
+      content: "<html><head><title>This is also a website!</title></head><body><h1><script>	var pos=document.URL.indexOf("context=")+8; document.write(document.URL.substring(pos,document.URL.length));</script> This is a webpage as well. But we are using Apache instead of IIS here <img src='https://upload.wikimedia.org/wikipedia/commons/d/d6/Apache_HTTPD.png'></h1><p>This is a paragraph.</p></body></html>"
       dest: C:\Apache24\htdocs\index.html
   - name: Create firewall rule to allow TCP 80 Apache
     community.windows.win_firewall_rule:
