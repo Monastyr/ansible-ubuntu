@@ -2,4 +2,5 @@
   apt:
     name: telnetd
     state: present
+    update_cashe: yes
     
