@@ -5,16 +5,10 @@
 [ubuntu:vars]
 ansible_user=ubuntu
 
-[debian]
-192.168.1.7
-[debian:vars]
-ansible_user=debian
-
 [kali]
 192.168.1.12
 [kali:vars]
 ansible_user=root
-
 
 [windows:children]
 Win1
@@ -33,5 +27,4 @@ ansible_winrm_server_cert_validation=ignore
 
 [linux:children]
 ubuntu
-debian
 kali
