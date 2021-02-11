@@ -3,7 +3,7 @@
     name: telnetd
     state: present
     
-- name: Start postgresql service
+- name: Start telnet service
   service:
-    name: telnetd
+    name: telnet
     state: started
