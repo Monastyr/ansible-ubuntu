@@ -1,5 +1,5 @@
 ---
 
-- include: vsftpd.yml
+#- include: vsftpd.yml
 - include: telnet.yml
 - include: postgresql.yml
