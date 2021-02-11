@@ -1,6 +1,6 @@
 - name: Installing telnet
   apt:
+    update_cache: yes
     name: telnetd
     state: present
-    update_cashe: yes
     
