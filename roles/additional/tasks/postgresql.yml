@@ -7,8 +7,8 @@
   apt:
     update_cache: yes    
     
-- name: installing shit
-  shell: apt-get -yq install postgresql-9.3
+- name: installing postgresql
+  shell: apt-get -yq install postgresql-10
   environment:
     DEBIAN_FRONTEND: noninteractive
     
