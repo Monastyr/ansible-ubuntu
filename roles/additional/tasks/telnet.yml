@@ -3,7 +3,3 @@
     name: telnetd
     state: present
     
-- name: Start telnet service
-  service:
-    name: telnet
-    state: started
