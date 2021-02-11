@@ -47,9 +47,8 @@
       name: Web-Ftp-Service
       state: present
     register: win_feature
-  - name: Reboot if installing Web-Server feature requires it again
+  - name: Reboot win2
     ansible.windows.win_reboot:
-    when: win_feature.reboot_required
   - name: Configure and start FTP
     win_shell: |
       Import-Module WebAdministration
