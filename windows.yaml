@@ -22,7 +22,7 @@
     when: win_feature.reboot_required
   - name: Create website
     win_copy:
-      content: "<html><head><title>This is a website!</title></head><body><h1>Webpage example. Screengrab me! <img src='https://upload.wikimedia.org/wikipedia/commons/f/ff/Cliche_Hacker_and_Binary_Code_%2826946304530%29.jpg'></h1><p>This is a paragraph.</p></body></html>"
+      content: "<html><head><title>This is a website!</title></head><body><h1>Hello, world! This is a webpage example, just here so it can be screengrabbed! <img src='https://upload.wikimedia.org/wikipedia/commons/f/ff/Cliche_Hacker_and_Binary_Code_%2826946304530%29.jpg'></h1><p>This is a paragraph.</p></body></html>"
       dest: C:\Inetpub\wwwroot\index.html
   - name: Run IIS web server
     win_service:
