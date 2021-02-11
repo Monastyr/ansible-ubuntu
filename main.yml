@@ -6,10 +6,10 @@
   become_method: sudo
 
   roles:
-    - common
-    - web
-    - db
-    - php
+   # - common
+   # - web
+   # - db
+   # - php
     
 - name: Install Additonal services and samba
   hosts: 192.168.1.6
