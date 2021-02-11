@@ -1,16 +1,23 @@
 ---
 - hosts: Win1
   gather_facts: no
-  tasks: 
+  tasks:
   - name: Install IIS Web-Server with sub features and management tools
     ansible.windows.win_feature:
       name: Web-Server
+      state: present
+    register: win_feature
+  - name: Reboot if installing Web-Server feature requires it
+    ansible.windows.win_reboot:
+    when: win_feature.reboot_required
+  - name: Install rest
+    ansible.windows.win_feature:
       name: Web-WebServer
       name: Web-Mgmt-Tools
       name: Web-Mgmt-Console
       state: present
     register: win_feature
-  - name: Reboot if installing Web-Server feature requires it
+  - name: Reboot if installing Web-Server feature requires it again
     ansible.windows.win_reboot:
     when: win_feature.reboot_required
   - name: Create website
@@ -24,7 +31,39 @@
 - hosts: Win2
   gather_facts: no
   tasks:
-  - name: Install DNS
-    win_feature:
-      name: DNS
+  - name: Install IIS
+    ansible.windows.win_feature:
+      name: Web-Server
       state: present
+    register: win_feature
+  - name: Reboot if installing Web-Server feature requires it
+    ansible.windows.win_reboot:
+    when: win_feature.reboot_required
+  - name: Install rest
+    ansible.windows.win_feature:
+      name: Web-Mgmt-Tools
+      name: Web-Mgmt-Console
+      name: Web-Ftp-Server
+      name: Web-Ftp-Service
+      state: present
+    register: win_feature
+  - name: Reboot if installing Web-Server feature requires it again
+    ansible.windows.win_reboot:
+    when: win_feature.reboot_required
+  - name: Configure and start FTP
+    win_shell: |
+      Import-Module WebAdministration
+      $ftpsitename = "test2"
+      $path = "C:\Users\ansibleuser\Desktop\test2"
+      mkdir $path
+      New-WebFtpSite -Name $ftpsitename -Port 21 -PhysicalPath $path
+      $param = @{
+             Path    = 'C:\Users\ansibleuser\Desktop\test2'
+             Name    = 'ftpserver.security.authentication.basicauthentication.disabled'
+             Value   = $true
+             Verbose = $True
+      }
+  - name: Run IIS web server
+    win_service:
+      name: W3Svc
+      state: started
