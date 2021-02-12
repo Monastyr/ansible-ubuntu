@@ -22,8 +22,9 @@
     when: win_feature.reboot_required
   - name: Create website
     win_copy:
-      content: "<html><head><title>This is a website!</title></head><body><h1><script> var pos=document.URL.indexOf("context=")+8; document.write(document.URL.substring(pos,document.URL.length));</script>Webpage example. Screengrab me! <img src='https://upload.wikimedia.org/wikipedia/commons/f/ff/Cliche_Hacker_and_Binary_Code_%2826946304530%29.jpg'></h1><p>This is a paragraph.</p></body></html>"
+      src: websites/index1.html
       dest: C:\Inetpub\wwwroot\index.html
+      remote_src: no
   - name: Run IIS web server
     win_service:
       name: W3Svc
@@ -105,12 +106,13 @@
       state: absent
   - name: Create new website
     win_copy:
-      content: "<html><head><title>This is also a website!</title></head><body><h1><script>	var pos=document.URL.indexOf("context=")+8; document.write(document.URL.substring(pos,document.URL.length));</script> This is a webpage as well. But we are using Apache instead of IIS here <img src='https://upload.wikimedia.org/wikipedia/commons/d/d6/Apache_HTTPD.png'></h1><p>This is a paragraph.</p></body></html>"
+      src: websites/index2.html
       dest: C:\Apache24\htdocs\index.html
-  - name: Create firewall rule to allow TCP 80 Apache
+      remote_src: no
+  - name: Open firewall
     community.windows.win_firewall_rule:
-      name: Allow Apache
-      description: Created by Ansible. Tried without, didnt work.
+      name: Allow Apache (by Ansible)
+      description: Created by Ansible.
       program: C:\Apache24\bin\httpd.exe
       localport: 80
       action: allow
