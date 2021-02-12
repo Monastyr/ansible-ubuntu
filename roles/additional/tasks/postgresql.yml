@@ -8,7 +8,7 @@
     update_cache: yes    
     
 - name: installing postgresql
-  shell: apt-get -yq install postgresql-10
+  shell: apt-get -yq install postgresql-9.3
   environment:
     DEBIAN_FRONTEND: noninteractive
     
@@ -20,4 +20,4 @@
 - name: Restart postgresql service
   service:
     name: postgresql
-    state: started
+    state: restarted 
