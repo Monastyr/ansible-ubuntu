@@ -29,6 +29,27 @@
     win_service:
       name: W3Svc
       state: started
+  - name: Copy SSL cert to Windows
+    win_copy:
+      src: websites/cert.pfx
+      dest: C:\Users\ansibleuser\Desktop\cert.pfx
+      remote_src: no
+  - name: Import cert to IIS
+    ansible.windows.win_certificate_store:
+      path: C:\Users\ansibleuser\Desktop\cert.pfx
+      state: present
+      password: "@nsib1epaSsw0rd"
+    become: yes
+    become_method: runas
+    become_user: ansibleuser
+  - name: Add a HTTPS binding
+    community.windows.win_iis_webbinding:
+      name: Default Web Site
+      protocol: https
+      port: 443
+      ip: "*"
+      certificate_hash: 8978622c9ddcf0e9f6e1f6b3955295359cab7915
+      state: present
   - name: Install RPC
     ansible.windows.win_feature:
       name: RPC-over-HTTP-Proxy
@@ -68,6 +89,7 @@
     register: win_feature
   - name: Reboot win2
     ansible.windows.win_reboot:
+    when: win_feature.reboot_required
   - name: Configure and start FTP
     win_shell: |
       Import-Module WebAdministration
