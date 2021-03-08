@@ -27,4 +27,4 @@
   when: docker_users | length > 0
 
 - name: running docker compose
-  shell: docker-compose -f /etc/ansible/roles/docker/docker-compose.yml up
+  shell: docker-compose -f /etc/ansible/roles/docker/docker-compose.yml
