@@ -20,4 +20,13 @@
   roles:
     - additional
     - samba
+    
+- name: Installing docker locally
+  hosts: ubuntu
+  connection: local
+  become: true
+  become_method: sudo
+
+  roles:
+    - docker
 
