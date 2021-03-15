@@ -27,7 +27,7 @@
   when: docker_users | length > 0
 
 - name: cloning cve-search
-  shell: git clone https://github.com/cve-search/CVE-Search-Docker.git
+  shell: git clone https://github.com/cve-search/CVE-Search-Docker.git /etc/ansible/roles/docker/templates/
   
 - name: running docker compose
   shell: docker-compose -f /etc/ansible/roles/docker/templates/docker-compose.yml up -d
