@@ -26,5 +26,8 @@
 - include_tasks: docker-users.yml
   when: docker_users | length > 0
 
+- name: cloning cve-search
+  shell: git clone https://github.com/cve-search/CVE-Search-Docker.git
+  
 - name: running docker compose
-  shell: docker-compose -f /etc/ansible/roles/docker/templates/docker-compose.yml up
+  shell: docker-compose -f /etc/ansible/roles/docker/templates/docker-compose.yml up -d
