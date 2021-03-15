@@ -41,7 +41,7 @@ services:
   cve_search:
     image: cve_search
     build:
-      context: .
+      context: ./cve-search
       dockerfile: /etc/ansible/roles/docker/templates/cve-search/docker/images/cve_search/dockerfile-cve_search
       args:
         - REPO=cve-search/cve-search
@@ -62,7 +62,7 @@ services:
     hostname: redis
     restart: always
     build:
-      context: .
+      context: ./cve-search
       dockerfile: /etc/ansible/roles/docker/templates/cve-search/docker/images/redis/dockerfile-redis
     volumes:
       - "./.cve_search_data/cve_search_redis:/data"
@@ -75,7 +75,7 @@ services:
     hostname: mongo
     restart: always
     build:
-      context: .
+      context: ./cve-search
       dockerfile: /etc/ansible/roles/docker/templates/cve-search/docker/images/mongodb/dockerfile-mongo
     volumes:
       - "./.cve_search_data/cve_search_mongodb:/data/db"
