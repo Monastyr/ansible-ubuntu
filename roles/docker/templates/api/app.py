@@ -1,15 +1,9 @@
-from flask import Flask
-from flask import jsonify
+from flask import Flask, jsonify, render_template, url_for
 import pymongo
 import json
+import os
 
-'''
-To run:
-  mkdir flask-by-example && cd flask-by-example
-  python3 -m venv env
-  source env/bin/activate
-'''
-app = Flask(__name__)
+app = Flask(__name__, static_folder="/pictures")
 app.config['JSON_SORT_KEYS'] = False
 
 @app.route("/")
@@ -31,7 +25,7 @@ def hello():
 
   m = {}
   m['message'] = "Autoenum API. Usage:"
-  m['Port'] = "5000"
+  m['Port'] = "5001"
   m['Valid endpoints'] = valid
   m['Examples'] = examples
   return jsonify(m)
@@ -63,16 +57,20 @@ def all():
   query = {}
   return find_in_db(query)
 
+@app.route("/picture/<string:filename>", methods=['GET'])
+def picture(filename):
+  return render_template('display.html', img=filename)
+
 def find_in_db(q):
-  #Denne må antageligvis endres
-  myclient = pymongo.MongoClient("mongodb://mongodb-docker:27017/")
+  myclient = pymongo.MongoClient("mongodb://autoenum-mongodb:27017/")
+
   mydb = myclient["mydb"]
   mycol = mydb["scans"]
 
   response = {}
   result = mycol.find(q)
-
   index = 0
+
   for doc in result:
     outer_key = "HostObject-" + str(index)
     #Removes id key:value to make it valid JSON
@@ -83,7 +81,4 @@ def find_in_db(q):
   return jsonify(response)
 
 if __name__=="__main__":
-
-  #Host=0.0.0.0 to allow connections from other machines
-  #Allows localhost only by default
   app.run(debug=True, host='0.0.0.0')
