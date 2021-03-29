@@ -21,12 +21,12 @@
     - additional
     - samba
     
-- name: Installing docker locally
-  hosts: localhost
-  connection: local
-  become: true
-  become_method: sudo
+#- name: Installing docker locally
+#  hosts: localhost
+#  connection: local
+#  become: true
+#  become_method: sudo
 
-  roles:
-    - docker
+  #roles:
+    #- docker
 
