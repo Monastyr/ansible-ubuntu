@@ -21,7 +21,7 @@
     - additional
     - samba
     
-#- name: Installing docker locally
+#- name: Installing autoenum locally
 #  hosts: localhost
 #  connection: local
 #  become: true
