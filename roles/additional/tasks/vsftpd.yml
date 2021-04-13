@@ -58,7 +58,6 @@
   user:
     name: ftp
     home: /var/ftp/
-    #move_home: yes
     
 - file:
     path: /var/ftp
